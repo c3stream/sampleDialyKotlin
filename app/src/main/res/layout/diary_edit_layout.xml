@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <android.support.v7.widget.AppCompatEditText
+
+            android:id="@+id/diaryTitleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="124dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:hint="タイトルを書きましょう"
+            android:inputType="textAutoCorrect|textCapSentences"
+
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColorHint="#bababa"
+            android:textSize="15sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#bababa"
+            />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/diaryBodyEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="top"
+            android:hint="日記を書きましょう"
+            android:imeOptions="actionDone"
+            android:inputType="textAutoCorrect|textCapSentences|textMultiLine"
+            android:maxLength="2000"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="20dp"
+            android:textColorHint="#bababa"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
