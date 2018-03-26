@@ -9,7 +9,6 @@ import app.test.kotlin.samplediary.R
 import app.test.kotlin.samplediary.data.Diary
 import app.test.kotlin.sampletango.db.DiaryHelper
 import kotlinx.android.synthetic.main.diary_edit_layout.*
-import java.util.*
 
 class DiaryEditFragment: Fragment() {
     private val layout = R.layout.diary_edit_layout

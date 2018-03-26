@@ -1,5 +1,6 @@
 package app.test.kotlin.samplediary.view
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -8,11 +9,11 @@ import android.util.Log
 import android.view.*
 import app.test.kotlin.samplediary.R
 import app.test.kotlin.samplediary.data.Diary
-import app.test.kotlin.samplediary.listener.DaiaryListListener
+import app.test.kotlin.samplediary.listener.DiaryListListener
 import app.test.kotlin.sampletango.db.DiaryHelper
 import kotlinx.android.synthetic.main.diary_list_layout.*
 
-class DiaryListFragment: Fragment(), DaiaryListListener {
+class DiaryListFragment: Fragment(), DiaryListListener {
     private val layout = R.layout.diary_list_layout
 
     companion object {
@@ -83,7 +84,7 @@ class DiaryListFragment: Fragment(), DaiaryListListener {
         }
     }
 
-    override fun dialyDetail(diaryId: String) {
+    override fun diaryDetail(diaryId: String) {
         activity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.replace(R.id.mainLayout, DiaryDetailFragment.newInstance(diaryId), DiaryDetailFragment::class.simpleName)
@@ -91,11 +92,15 @@ class DiaryListFragment: Fragment(), DaiaryListListener {
                 ?.commit()
     }
 
+    override fun diaryDelete(diaryId: String, adapterPosition: Int) {
+        deleteDiary(diaryId, adapterPosition)
+    }
+
     private fun readDiaryList() : List<Diary> {
         val diaryDb = DiaryHelper(activity).readableDatabase
         val diaryList = mutableListOf<Diary>()
         val cursor = diaryDb.let {
-            it?.query("diary", null, null, null, null, null, "id DESC", null)
+            it?.query("diary", null, "is_delete=0", null, null, null, "id DESC", null)
         }
         cursor.let {
             if(it?.moveToFirst() == false) {
@@ -117,6 +122,16 @@ class DiaryListFragment: Fragment(), DaiaryListListener {
             }
             cursor?.close()
             return diaryList
+        }
+    }
+
+    private fun deleteDiary(diaryId: String, adapterPosition: Int) {
+        val diary = ContentValues()
+        diary.put("is_delete", 1)
+        val diaryDb = DiaryHelper(activity).writableDatabase
+        diaryDb.let{
+            it?.update("diary", diary, "id=$diaryId", null)
+            diaryRecyclerView.adapter.notifyItemRemoved(adapterPosition)
         }
     }
 }

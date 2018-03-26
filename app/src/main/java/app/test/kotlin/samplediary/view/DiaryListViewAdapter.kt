@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import app.test.kotlin.samplediary.R
 import app.test.kotlin.samplediary.data.Diary
-import app.test.kotlin.samplediary.listener.DaiaryListListener
+import app.test.kotlin.samplediary.listener.DiaryListListener
 import kotlinx.android.synthetic.main.diary_detail_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class DiaryListViewAdapter(private val diaryList: List<Diary>, private val  listener: DaiaryListListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DiaryListViewAdapter(private val diaryList: List<Diary>, private val  listener: DiaryListListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private class DiaryListViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
     }
@@ -41,11 +41,15 @@ class DiaryListViewAdapter(private val diaryList: List<Diary>, private val  list
         holder.itemView.diaryBody.text = diaryList[position].body
 
         holder.itemView.setOnClickListener {
+            listener.diaryDetail(diaryList[position].id)
+        }
+
+        holder.itemView.deleteDiary.setOnClickListener {
             val adapterPosition = holder.adapterPosition
             if(adapterPosition == RecyclerView.NO_POSITION) {
                 return@setOnClickListener
             }
-            listener.dialyDetail(diaryList[adapterPosition].id)
+            listener.diaryDelete(diaryList[position].id, adapterPosition)
         }
     }
 
