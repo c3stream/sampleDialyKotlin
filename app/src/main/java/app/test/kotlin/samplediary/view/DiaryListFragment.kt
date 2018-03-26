@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.diary_list_layout.*
 
 class DiaryListFragment: Fragment(), DiaryListListener {
     private val layout = R.layout.diary_list_layout
+    private var diaryList = mutableListOf<Diary>()
 
     companion object {
         fun newInstance(): DiaryListFragment {
@@ -92,13 +93,13 @@ class DiaryListFragment: Fragment(), DiaryListListener {
                 ?.commit()
     }
 
-    override fun diaryDelete(diaryId: String, adapterPosition: Int) {
-        deleteDiary(diaryId, adapterPosition)
+    override fun diaryDelete(diaryId: String, position: Int,  adapterPosition: Int) {
+        deleteDiary(diaryId, position, adapterPosition)
     }
 
     private fun readDiaryList() : List<Diary> {
         val diaryDb = DiaryHelper(activity).readableDatabase
-        val diaryList = mutableListOf<Diary>()
+        diaryList = mutableListOf()
         val cursor = diaryDb.let {
             it?.query("diary", null, "is_delete=0", null, null, null, "id DESC", null)
         }
@@ -125,13 +126,16 @@ class DiaryListFragment: Fragment(), DiaryListListener {
         }
     }
 
-    private fun deleteDiary(diaryId: String, adapterPosition: Int) {
+    private fun deleteDiary(diaryId: String, position: Int, adapterPosition: Int) {
         val diary = ContentValues()
         diary.put("is_delete", 1)
         val diaryDb = DiaryHelper(activity).writableDatabase
         diaryDb.let{
             it?.update("diary", diary, "id=$diaryId", null)
+            diaryList.removeAt(position)
+            diaryRecyclerView.removeViewAt(adapterPosition)
             diaryRecyclerView.adapter.notifyItemRemoved(adapterPosition)
+            diaryRecyclerView.adapter.notifyItemRangeChanged(adapterPosition, diaryList.size)
         }
     }
 }

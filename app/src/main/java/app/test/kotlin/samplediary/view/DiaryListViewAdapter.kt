@@ -49,7 +49,7 @@ class DiaryListViewAdapter(private val diaryList: List<Diary>, private val  list
             if(adapterPosition == RecyclerView.NO_POSITION) {
                 return@setOnClickListener
             }
-            listener.diaryDelete(diaryList[position].id, adapterPosition)
+            listener.diaryDelete(diaryList[position].id, position, adapterPosition)
         }
     }
 
