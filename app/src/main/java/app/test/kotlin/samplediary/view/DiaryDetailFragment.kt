@@ -9,6 +9,7 @@ import app.test.kotlin.samplediary.R
 import app.test.kotlin.samplediary.data.Diary
 import app.test.kotlin.sampletango.db.DiaryHelper
 import kotlinx.android.synthetic.main.diary_detail_layout.*
+import kotlinx.android.synthetic.main.diary_detail_layout.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -72,6 +73,8 @@ class DiaryDetailFragment: Fragment() {
         diaryTitle.text = diary.title
         diaryDate.text = convertUnixTimeToString(diary.create_at)
         diaryBody.text = diary.body
+
+        deleteDiary.visibility = View.GONE
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -103,7 +106,6 @@ class DiaryDetailFragment: Fragment() {
                 } while (cursor?.moveToNext() == true)
 
             } catch (e: Exception) {
-                Log.e("data", "${diary}", e)
             }
             cursor?.close()
             return diary

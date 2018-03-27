@@ -16,7 +16,6 @@ class DiaryHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
                 "`update_at` INTEGER," +
                 "`is_delete` INTEGER" +
                 ")"
-        private const val SQL_DROP_TABLE_DIARY = "DROP TABLE IF EXISTS diary"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -24,6 +23,5 @@ class DiaryHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, D
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-//        db?.execSQL(SQL_DROP_TABLE_DIARY)
     }
 }

@@ -131,7 +131,6 @@ class DiaryEditFragment: Fragment() {
                 } while (cursor?.moveToNext() == true)
 
             } catch (e: Exception) {
-                Log.e("data", "${diary}", e)
             }
             cursor?.close()
             return diary

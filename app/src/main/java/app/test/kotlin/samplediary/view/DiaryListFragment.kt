@@ -60,19 +60,14 @@ class DiaryListFragment: Fragment(), DiaryListListener {
     }
 
     private fun intView() {
-        Log.e("data", "-----")
         val diaryList = readDiaryList()
 
         if (diaryList.isEmpty()) {
             diaryEmpty.visibility = View.VISIBLE
             diaryRecyclerView.visibility = View.GONE
-
-            Log.e("data", "empty")
         } else {
             diaryEmpty.visibility = View.GONE
             diaryRecyclerView.visibility = View.VISIBLE
-
-            Log.e("data", "${diaryList}")
 
             // アダプター呼び出し
             diaryRecyclerView.setHasFixedSize(true)
@@ -80,7 +75,6 @@ class DiaryListFragment: Fragment(), DiaryListListener {
             diaryRecyclerView.layoutManager = linearLayoutManager
             diaryRecyclerView.adapter = DiaryListViewAdapter(diaryList, this)
             val dividerItemDecoration = DividerItemDecoration(diaryRecyclerView.context, linearLayoutManager.orientation)
-//        activity?.let { ContextCompat.getDrawable(it, R.drawable.notification_list_divider)?.let { dividerItemDecoration.setDrawable(it) } }
             diaryRecyclerView.addItemDecoration(dividerItemDecoration)
         }
     }
@@ -119,7 +113,6 @@ class DiaryListFragment: Fragment(), DiaryListListener {
                 } while (cursor?.moveToNext() == true)
 
             } catch (e: Exception) {
-                Log.e("data", "${diaryList}", e)
             }
             cursor?.close()
             return diaryList
